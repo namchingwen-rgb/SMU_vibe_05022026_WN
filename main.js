@@ -24,6 +24,15 @@ class TotoGenerator extends HTMLElement {
         align-items: center;
         font-family: sans-serif;
         margin-top: 50px;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: var(--text-color);
       }
 
       button {
@@ -33,8 +42,9 @@ class TotoGenerator extends HTMLElement {
         margin-bottom: 20px;
         border: none;
         border-radius: 5px;
-        background-color: #4CAF50;
-        color: white;
+        background-color: var(--button-background);
+        color: var(--button-text);
+        transition: background-color 0.3s, color 0.3s;
       }
 
       .numbers-container {
@@ -49,9 +59,11 @@ class TotoGenerator extends HTMLElement {
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        background-color: #f0f0f0;
+        background-color: var(--number-background);
+        color: var(--number-text);
         font-size: 1.5rem;
         font-weight: bold;
+        transition: background-color 0.3s, color 0.3s;
       }
     `;
 
@@ -84,3 +96,24 @@ class TotoGenerator extends HTMLElement {
 }
 
 customElements.define('toto-generator', TotoGenerator);
+
+// Theme toggling logic
+document.addEventListener('DOMContentLoaded', () => {
+  const themeToggleButton = document.getElementById('theme-toggle');
+  const body = document.body;
+
+  // Load saved theme from localStorage
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    body.classList.add('dark-theme');
+  }
+
+  themeToggleButton.addEventListener('click', () => {
+    body.classList.toggle('dark-theme');
+    if (body.classList.contains('dark-theme')) {
+      localStorage.setItem('theme', 'dark');
+    } else {
+      localStorage.setItem('theme', 'light');
+    }
+  });
+});
